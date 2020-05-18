@@ -19,7 +19,8 @@ select * from dept;
 
 select deptno from dept;
 
--- nvl 함수 : null값 연산가능 값으로 변경
+-- nvl 함수 : null값 연산가능 값으로 치환
+-- nvl(컬럼명, 기본값) : 기본값은 컬럼의 도메인의 자료형과 같아야 한다
 select ename, sal, job, comm, sal*12, sal*12+comm from emp;
 select ename, sal, job, comm, sal*12+comm, nvl(comm, 0), sal*12+nvl(comm, 0) from emp;
 
