@@ -27,11 +27,11 @@ select ename, sal, job, comm, sal*12+comm, nvl(comm, 0), sal*12+nvl(comm, 0) fro
 -- as : 컬럼 별칭으로 출력
 select ename, sal*12+nvl(comm, 0) as AnnSal from emp;
 
--- || : 완성 문장으로 출력
+-- || : 완성 문장으로 출력 (컬럼과 문자열 사이에 적용)
 -- initcap() : 첫글자 대문자 변환
 -- upper() : 대문자 변환
 -- lower() : 소문자 변환
-select initcap(ename) || ' is a ' || lower(job) as JobDesc from emp;
+select initcap(ename) || ' is a ' || lower(job) || '.' as JobDesc from emp;
 
 -- distinct : 중복 값 제거 후 출력
 select deptno from emp;
