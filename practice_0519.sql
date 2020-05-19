@@ -1,8 +1,8 @@
 -- 1.
-select ename, sal, sal+300 from emp;
+select ename, sal, sal+300 as addSal from emp;
 
 -- 2.
-select ename, sal, sal*12+100 from emp order by sal desc;
+select ename, sal, sal*12+100 as Income from emp order by Income desc;
 
 -- 3.
 select ename, sal from emp where sal >= 2000 order by sal desc;
@@ -18,9 +18,10 @@ select ename, job, hiredate from emp where hiredate between '1981-02-20' and '19
 
 -- 7.
 select ename, deptno from emp where deptno between 20 and 30 order by ename desc;
+select ename, deptno from emp where deptno in(20, 30) order by ename desc;
 
 -- 8.
-select ename, sal, deptno from emp where sal between 2000 and 3000 order by ename asc;
+select ename, sal, deptno from emp where sal between 2000 and 3000 and deptno in(20, 30) order by ename asc;
 
 -- 9.
 select ename, hiredate from emp where hiredate like '81%';
