@@ -12,7 +12,7 @@ select round(1282.238273, 2) from dual;     -- 반올림 (양수 값 : 소숫점
 
 -- 문자 함수
 select concat(ename, job) from emp; -- 문자 연결
-select substr(job, 3) from emp;     -- 문자 추출 (컬럼, 시작 자리수)
+select substr(job, 3) from emp;     -- 문자 추출 (컬럼, 시작 자리수, 길이)
 select trim('#! ' FROM '    #SQL Tutorial!    ') from dual;
 select sysdate from dual;           -- 시스템 현재 날짜 반환
 
