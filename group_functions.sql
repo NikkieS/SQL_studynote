@@ -20,5 +20,21 @@ select job, count(job) from emp group by job order by count(job) desc;
 
 select deptno, trunc(avg(sal), 0) from emp group by deptno;
 select deptno, max(sal), min(sal) from emp group by deptno;
-select deptno, count(*) as numofemp, count(comm) as numofempcomm from emp group by deptno;
+select deptno, count(*) as numofemp, count(comm) as numofempcomm 
+from emp
+where comm <> 0
+group by deptno;
 
+-- having : 그룹의 결과를 제한
+select deptno, round(avg(sal), 5) from emp group by deptno having avg(sal)>=2000;
+select deptno, round(avg(sal), 5) from emp group by deptno having avg(sal)<=2000;
+select deptno, max(sal), min(sal) from emp group by deptno having max(sal)>=2900;
+
+select job, count(*) as "직급별 인원",
+sum(sal) as "직급별 월 총 급여",
+trunc(avg(sal)) as "직급별 월 평균 급여",
+nvl(sum(comm), 0) as "부서별 수령 성과급 총 합",
+max(sal) as "직급별 최고 급여 금액"
+from emp group by job;
+
+select deptno, job from emp group by deptno, job order by job;
