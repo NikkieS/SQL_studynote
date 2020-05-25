@@ -107,4 +107,53 @@ create table emp03(
 desc emp03; 
 insert into emp03 values(1111, 'TEST', 'MANAGER', 10);
 insert into emp03 values(1111, 'TEST123', 'MANAGER', 20);
+
 insert into emp03 values(NULL, 'TEST123', 'MANAGER', 20);
+
+create table emp05(
+    empno number(4) constraint emp05_empno_pk primary key,
+    ename varchar2(10) constraint emp05_ename_nn not null,
+    job varchar2(10),
+    deptno number(2)
+);
+
+desc emp05;
+insert into emp05 values(1111, 'TEST', 'MANAGER', 10);
+insert into emp05 values(1111, 'TEST123', 'MANAGER', 20);
+insert into emp05 values(NULL, 'TEST123', 'MANAGER', 20);
+select * from emp05;
+
+-- 테이블을 생성하되 사원번호에 기본 키 제약 조건을 설정
+-- deptno 외래키로 제약조건을 설정
+
+create table emp06(
+    empno number(4) constraint emp06_empno_pk primary key,
+    ename varchar2(10) constraint emp06_ename_nn not null,
+    job varchar2(10),
+    deptno number(2) constraint emp06_deptno_fk references dept(deptno)
+);
+
+insert into emp06 values(1111, 'TEST', 'MANAGER', 10);
+insert into emp06 values(1111, 'TEST123', 'MANAGER', 20);
+insert into emp06 values(NULL, 'TEST123', 'MANAGER', 20);
+insert into emp06 values(2222, 'TEST', 'MANAGER', 50);
+
+
+-- 사원번호, 사원명, 부서번호, 직급, 급여, 성별, 생일 7개의 칼럼으로 구성된
+-- 테이블을 생성하되 기본 키 제약 조건, 외래키 제약 조건은 물론 CHECK 제약 조건도 설정
+-- default 제약 조건으로 birthday sysdate로 입력 처리
+create table emp07(
+    empno number(4) constraint emp07_empno_pk primary key,
+    ename varchar2(10) constraint emp07_ename_nn not null,
+    job varchar2(10) default 'MANAGER',
+    deptno number(2) constraint emp07_deptno_fk references dept(deptno),
+    gender char(1) constraint emp07_gender_ck check(gender in ('M', 'F')),
+    sal number(7,2) constraint emp07_sal_ck check(sal between 500 and 5000),
+    birthday date default sysdate
+);
+
+insert into emp07 values(1111, 'TEST', NULL, 10, 'F', 600, NULL);
+insert into emp07 values(1112, 'TEST123', NULL, 10, 'K', 600, NULL);
+insert into emp07 values(1113, 'TEST', NULL, 10, 'F', 6000, NULL);
+
+select * from emp07;
