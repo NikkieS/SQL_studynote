@@ -100,6 +100,14 @@ from book b join orders o on b.bookid=o.bookid join customer c on c.custid=o.cus
 where b.publisher in(select publisher from book b natural join orders o where custid=(select custid from customer where name='박지성')) 
 and c.name<>'박지성';
 
+select distinct b.publisher from customer c, orders o, book b where c.custid=o.custid and o.bookid=b.bookid and c.name='박지성';
+
+select c.name
+from orders o, customer c, book b 
+where o.custid=c.custid 
+and o.bookid=b.bookid 
+and b.publisher in (select distinct b.publisher from customer c, orders o, book b where c.custid=o.custid and o.bookid=b.bookid and c.name='박지성');
+
 -- (2) 두 개 이상의 서로 다른 출판사에서 도서를 구매한 고객의 이름
 select c.name 
 from book b join orders o on b.bookid=o.bookid join customer c on c.custid=o.custid 
