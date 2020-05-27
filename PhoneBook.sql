@@ -254,10 +254,6 @@ select b.fr_name, b.fr_phonenumber, b.fr_email, b.fr_address,
 from phoneInfo_basic b, phoneInfo_com c
 where b.idx=c.fr_ref;
 
-drop view pb_basic_view;
-drop view pb_uni_view;
-drop view pb_com_view;
-
 select * from pb_basic_view;
 select * from pb_uni_view;
 select * from pb_com_view;
