@@ -41,7 +41,7 @@ create table emp04
 as
 select * from emp where deptno=10;
 
--- emp 테이블의 스키마 구조만 복사해서 새로운 테이블 emp05 todtjd
+-- emp 테이블의 스키마 구조만 복사해서 새로운 테이블 emp05 생성
 create table emp05
 as
 select * from emp where 1<0;
