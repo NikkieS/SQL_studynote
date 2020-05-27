@@ -222,3 +222,42 @@ create table phoneInfo_com(
     fr_ref number(6),
     constraint comfr_ref_fk foreign key(fr_ref) references phoneInfo_basic(idx) on delete cascade
 );
+
+-- =============================================================
+-- VIEW
+-- =============================================================
+-- 1. 전체 친구 목록 출력
+create or replace view pb_basic_view
+(name, phonenumber, email, address, major, year, company)
+as
+select b.fr_name, b.fr_phonenumber, b.fr_email, b.fr_address,
+        u.fr_u_major, u.fr_u_year,
+        c.fr_c_company
+from phoneInfo_basic b, phoneInfo_uni u, phoneInfo_com c
+where b.idx=u.fr_ref(+) and b.idx=c.fr_ref(+);
+
+-- 2. 학교 친구 목록 출력
+create or replace view pb_uni_view
+(name, phonenumber, email, address, major, year)
+as
+select b.fr_name, b.fr_phonenumber, b.fr_email, b.fr_address,
+        u.fr_u_major, u.fr_u_year
+from phoneInfo_basic b, phoneInfo_uni u
+where b.idx=u.fr_ref;
+
+-- 3. 회사 친구 목록 출력
+create or replace view pb_com_view
+(name, phonenumber, email, address, company)
+as
+select b.fr_name, b.fr_phonenumber, b.fr_email, b.fr_address,
+        c.fr_c_company 
+from phoneInfo_basic b, phoneInfo_com c
+where b.idx=c.fr_ref;
+
+drop view pb_basic_view;
+drop view pb_uni_view;
+drop view pb_com_view;
+
+select * from pb_basic_view;
+select * from pb_uni_view;
+select * from pb_com_view;
