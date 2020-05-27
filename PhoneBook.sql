@@ -1,11 +1,11 @@
+-- =============================================================
 -- 전화번호 관리 프로그램
-
 -- 이름, 전화번호, 생일, 이메일
 -- 전공, 학년
 -- 부서이름, 직급
 -- 모임이름, 닉네임
 -- 대리키 : 일련번호 -> p_idx / member_idx
-
+-- =============================================================
 -- 전화번호 부(Contact)
 
 create table phonebook(
@@ -96,11 +96,13 @@ values (3, 'C', '010-3333-1234', 'NEW YORK');
 -- reg date X, email X, add X
 insert into phoneInfo_basic(idx, fr_name, fr_phonenumber)
 values (4, 'D', '010-4444-1234');
+insert into phoneInfo_basic(idx, fr_name, fr_phonenumber)
+values (5, 'E', '010-5555-1234');
 
 -- phoneInfo_uni
 -- default
-insert into phoneInfo_uni(idx, fr_u_major, fr_u_year)
-values (5, 'BUSINESS', 3);
+insert into phoneInfo_uni(idx, fr_u_major, fr_u_year, fr_ref)
+values (5, 'BUSINESS', 3, 5);
 -- year X
 insert into phoneInfo_uni(idx, fr_u_major)
 values (6, 'PHYSICS');
@@ -137,3 +139,86 @@ where b.idx=u.fr_ref(+);
 select * 
 from phoneInfo_basic b, phoneInfo_com c
 where b.idx=c.fr_ref(+);
+
+select * from phoneInfo_uni;
+select * from phoneInfo_com;
+select * from phoneInfo_basic;
+-- =============================================================
+-- 수정을 위한 SQL
+-- =============================================================
+-- 1. 회사친구 정보 수정
+update phoneInfo_basic
+set fr_name='NEW', fr_phonenumber='010-0000-0000', 
+    fr_email='new@gmail.com', fr_address='BEIJING'
+where fr_name='B';
+
+update phoneInfo_com
+set fr_c_company='TAOBAO'
+where fr_ref=(select idx from phoneInfo_basic where fr_name='NEW');
+
+-- 2. 학교친구 정보 수정
+update phoneInfo_basic
+set fr_name='UPDATE', fr_phonenumber='010-1234-1234',
+    fr_email='update@gmail.com', fr_address='PARIS'
+where fr_name='D';
+
+update phoneInfo_uni
+set fr_u_major='ARTS', fr_u_year=3,
+    fr_ref=4
+where idx=8;
+
+-- =============================================================
+-- 삭제를 위한 SQL
+-- =============================================================
+-- 1. 회사친구 정보 삭제
+delete from phoneInfo_com
+where fr_ref=(select idx from phoneInfo_basic where fr_name='C');
+
+delete from phoneInfo_basic
+where fr_name='C';
+
+-- 2. 학교친구 정보 삭제
+delete from phoneInfo_uni
+where fr_u_major='BUSINESS';
+
+delete from phoneInfo_basic
+where idx=5;
+
+-- =============================================================
+-- parent & child 동시 삭제
+-- =============================================================
+-- 외래키 설정 시 부모의 행이 삭제 될 때 설정
+-- REFERENCES phoneInfo_basic(idx) on delete 설정 옵션
+-- no action  : 삭제 불가
+-- cascade  ! : 참조를 하고 있는 자식 테이블의 모든 행도 삭제
+-- set null ! : 참조를 하고 있는 자식 테이블의 모든 행의 외래키 컬럼의 값을 null로 변경
+-- set default: 참조를 하고 있는 자식 테이블의 모든 행의 외래키 컬럼의 값을 기본값으로 변경
+
+drop table phoneInfo_basic;
+drop table phoneInfo_uni;
+drop table phoneInfo_com;
+
+create table phoneInfo_basic(
+    idx number(6) constraint phoneInfo_basic_idx_pk primary key,
+    fr_name varchar2(20) constraint fr_name_nn not null,
+    fr_phonenumber varchar2(20) constraint fr_phonenumber_nn not null,
+    fr_email varchar2(20),
+    fr_address varchar2(20),
+    fr_regdate date default sysdate
+);
+
+create table phoneInfo_uni(
+    idx number(6) constraint phoneInfo_uni_idx_pk primary key,
+    fr_u_major varchar2(20) default 'N' constraint fr_u_major_nn not null,
+    fr_u_year number(1) default 1,
+    constraint fr_u_year_ck check(fr_u_year between 1 and 4),
+    fr_ref number(6),
+    constraint fr_ref_fk foreign key(fr_ref) references phoneInfo_basic(idx) on delete cascade
+);
+
+create table phoneInfo_com(
+    idx number(6) constraint phoneInfo_com_idx_pk primary key,
+    fr_c_company varchar2(20) default 'N' constraint fr_c_company_nn not null,
+    fr_ref number(6),
+    constraint comfr_ref_fk foreign key(fr_ref) references phoneInfo_basic(idx) on delete cascade
+);
