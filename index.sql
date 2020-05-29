@@ -24,3 +24,7 @@ select * from emp01 where ename='PARK';
 
 -- INDEX 생성
 -- create index 인덱스이름 on 테이블이름 (컬럼이름)
+
+create index emp01_ename_index on emp01(ename);
+
+select ename from emp01;
