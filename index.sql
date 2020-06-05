@@ -27,4 +27,12 @@ select * from emp01 where ename='PARK';
 
 create index emp01_ename_index on emp01(ename);
 
-select ename from emp01;
+select * from dept;
+delete from dept where dname='마케팅';
+insert all
+into emp values(empno, ename, job, mgr, hiredate, sal, comm, deptno)
+select empno, ename, job, mgr, hiredate, sal, comm, deptno
+from emp01 where rownum<15;
+
+update emp set ename='NICOLE' where hiredate like '94%';
+commit;
