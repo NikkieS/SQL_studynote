@@ -4,12 +4,12 @@ select * from dept;
 
 select job, sal, empno from emp;
 
--- emp : »ç¿øÁ¤º¸
--- dept : ºÎ¼­Á¤º¸
--- bonus : ÀÓ½ÃÅ×ÀÌºí
--- salgrade : ±Þ¿© Å×ÀÌºí
+-- emp : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+-- dept : ï¿½Î¼ï¿½ï¿½ï¿½ï¿½ï¿½
+-- bonus : ï¿½Ó½ï¿½ï¿½ï¿½ï¿½Ìºï¿½
+-- salgrade : ï¿½Þ¿ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 
--- Å×ÀÌºíÀÇ ±¸Á¶ È®ÀÎ : desc Å×ÀÌºíÀÌ¸§
+-- ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ : desc ï¿½ï¿½ï¿½Ìºï¿½ï¿½Ì¸ï¿½
 desc emp;
 desc dept;
 desc salgrade;
@@ -19,20 +19,29 @@ select * from dept;
 
 select deptno from dept;
 
--- nvl ÇÔ¼ö : null°ª ¿¬»ê°¡´É °ªÀ¸·Î Ä¡È¯
--- nvl(ÄÃ·³¸í, ±âº»°ª) : ±âº»°ªÀº ÄÃ·³ÀÇ µµ¸ÞÀÎÀÇ ÀÚ·áÇü°ú °°¾Æ¾ß ÇÑ´Ù
+-- nvl ï¿½Ô¼ï¿½ : nullï¿½ï¿½ ï¿½ï¿½ï¿½ê°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¡È¯
+-- nvl(ï¿½Ã·ï¿½ï¿½ï¿½, ï¿½âº»ï¿½ï¿½) : ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¾ï¿½ ï¿½Ñ´ï¿½
 select ename, sal, job, comm, sal*12, sal*12+comm from emp;
 select ename, sal, job, comm, sal*12+comm, nvl(comm, 0), sal*12+nvl(comm, 0) from emp;
 
--- as : ÄÃ·³ º°ÄªÀ¸·Î Ãâ·Â
+-- as : ï¿½Ã·ï¿½ ï¿½ï¿½Äªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 select ename, sal*12+nvl(comm, 0) as AnnSal from emp;
 
--- || : ¿Ï¼º ¹®ÀåÀ¸·Î Ãâ·Â (ÄÃ·³°ú ¹®ÀÚ¿­ »çÀÌ¿¡ Àû¿ë)
--- initcap() : Ã¹±ÛÀÚ ´ë¹®ÀÚ º¯È¯
--- upper() : ´ë¹®ÀÚ º¯È¯
--- lower() : ¼Ò¹®ÀÚ º¯È¯
+-- || : ï¿½Ï¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½)
+-- initcap() : Ã¹ï¿½ï¿½ï¿½ï¿½ ï¿½ë¹®ï¿½ï¿½ ï¿½ï¿½È¯
+-- upper() : ï¿½ë¹®ï¿½ï¿½ ï¿½ï¿½È¯
+-- lower() : ï¿½Ò¹ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 select initcap(ename) || ' is a ' || lower(job) || '.' as JobDesc from emp;
 
--- distinct : Áßº¹ °ª Á¦°Å ÈÄ Ãâ·Â
+-- distinct : ï¿½ßºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
 select deptno from emp;
 select distinct deptno from emp;
+
+select * from phonebook;
+
+create sequence phonebook_pidx_seq
+start with 6
+minvalue 0;
+
+insert into phoneInfo_basic(idx, fr_name, fr_phonenumber, fr_email, fr_address, fr_regdate)
+values (pb_basic_idx_seq.nextval, 'A', '010-1111-1234', 'a@gmail.com', 'SEOUL', '1994-04-05');
