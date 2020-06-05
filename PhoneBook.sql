@@ -12,8 +12,8 @@ create table phonebook(
     pIdx number(4)  constraint phonebook_pidx_pk primary key,
     pName varchar2(10) constraint phonebook_pname_nn not null,
     pNum varchar2(20) constraint phoenbook_pnum_nn not null,
-    pAdd varchar2(20) default 'SEOUL' constraint phonebook_padd_nn not null,
-    pEmail varchar2(20) default 'aia@aia.com' constraint phonebook_pemail_nn not null,
+    pAdd varchar2(20) default 'SEOUL',
+    pEmail varchar2(20) default 'aia@aia.com',
     
     pType varchar2(4) constraint phonebook_ptype_ck check(ptype in ('univ', 'com', 'cafe')),
     puMajor varchar2(20),
